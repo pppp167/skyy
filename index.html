@@ -4,19 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   
-  <meta name="theme-color" content="#1a1c8f">
+  <meta name="theme-color" content="#303790">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   
   <title>ThaID Full Feature</title>
-  
-  <!-- 🌟 เปลี่ยนฟอนต์เป็น LINE Seed Sans TH / Prompt / Kanit -->
+
+  <!-- 🌟 เพิ่มส่วนนี้เพื่อเปลี่ยนไอคอนบนหน้าจอโฮม (Home Screen Icon) -->
+  <!-- รูปสำหรับ iPhone / iPad -->
+  <link rel="apple-touch-icon" sizes="180x180" href="logo.png">
+  <!-- รูปสำหรับ Android / Web App -->
+  <link rel="icon" type="image/png" sizes="192x192" href="logo.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="logo.png">
+  <!-- ------------------------------------------------ -->
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=LINE+Seed+Sans+TH:wght@400;500;600;700&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
   
-  <!-- ไอคอน FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
@@ -25,19 +31,17 @@
     html, body {
       height: 100%;
       margin: 0;
-      background: #1a1c8f;
+      background: #303790;
       overflow: hidden;
     }
 
     body {
-      /* 🌟 ปรับฟอนต์หลัก */
       font-family: 'LINE Seed Sans TH', 'Prompt', sans-serif;
       width: 100%;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
 
-    /* 🌟 กรอบหลักของแอป */
     .app-container {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -48,7 +52,7 @@
       width: auto;
       border: none;
       border-radius: 0;
-      background: #1a1c8f;
+      background: #303790;
       display: flex;
       flex-direction: column;
       box-shadow: none;
@@ -57,14 +61,13 @@
 
     input[type="file"] { display: none; }
 
-    /* 🌟 ส่วนหัว */
     header {
       color: white;
-      background: #1a1c8f;
+      background: #303790;
       flex-shrink: 0;
       position: relative;
       z-index: 50;
-      padding: calc(env(safe-area-inset-top) + 12px) 20px 20px 20px;
+      padding: calc(env(safe-area-inset-top) + 12px) 20px 8px 20px;
       isolation: isolate;
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
@@ -81,7 +84,6 @@
       background-image: url('https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80');
     }
 
-    /* 🌟 ปรับขนาดตัวอักษรหัวข้อ */
     .user-text p { font-size: 13px; color: #e2e8f0; font-weight: 400; margin-bottom: 2px; display: flex; align-items: center; gap: 6px;}
     .user-text h1 { font-size: 17px; font-weight: 600; margin-top: 0; letter-spacing: -0.2px;}
 
@@ -104,7 +106,6 @@
     }
     .online-dot { width: 4px; height: 4px; background: white; border-radius: 50%; }
 
-    /* 🌟 พื้นที่สกอลล์ */
     .main-scroll-area {
       flex: 1;
       min-height: 0;
@@ -116,9 +117,8 @@
     
     .main-scroll-area::-webkit-scrollbar { display: none; }
 
-    /* พื้นที่ส่วนกลาง (สีน้ำเงิน) */
     .blue-section {
-      padding: 0 16px;
+      padding: 0 16px 10px 16px; 
       position: relative;
       z-index: 10;
       display: flex;
@@ -127,13 +127,19 @@
       flex-shrink: 0;
     }
 
-    /* --- บัตรประชาชน --- */
     .card-wrapper {
-      width: 100%; height: 220px; perspective: 1000px; position: relative;
+      width: 100%;
+      max-width: 350px; 
+      height: auto;
+      aspect-ratio: 1.58 / 1;
+      perspective: 1000px;
+      position: relative;
+      margin-top: 0;
     }
 
     .card-inner {
-      width: 100%; height: 100%; transition: transform 0.6s;
+      width: 100%; height: 100%; 
+      transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
       transform-style: preserve-3d; position: relative; cursor: pointer;
     }
 
@@ -147,9 +153,14 @@
 
     .card-back { transform: rotateY(180deg); }
 
-    .card-image { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .card-image { 
+      width: 100%; 
+      height: 100%; 
+      object-fit: contain; 
+      background: #fff; 
+      display: block; 
+    }
 
-    /* 🌟 หน้า Lock */
     .lock-overlay {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(255, 255, 255, 0.55);
@@ -163,13 +174,18 @@
     .lock-icon-svg { width: 56px; height: 56px; fill: #333; margin-bottom: 12px; }
     .lock-text { font-size: 17px; font-weight: 600; color: #333; }
 
-    /* ปุ่มเมนูใต้บัตร */
-    .card-action-bar { margin-top: 15px; display: flex; justify-content: center; gap: 12px; width: 100%; }
+    .card-action-bar { 
+      margin-top: 10px; 
+      display: flex; 
+      justify-content: center; 
+      gap: 12px; 
+      width: 100%; 
+    }
     
     .card-action-btn {
-      background: #2b359c; color: white; border: none;
+      background: #3f48a5; color: white; border: none;
       padding: 8px 16px; border-radius: 20px; 
-      font-size: 14px; /* ปรับให้ใหญ่ขึ้น */
+      font-size: 14px;
       font-weight: 500;
       cursor: pointer; display: flex; align-items: center; gap: 6px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.2); transition: all 0.2s; 
@@ -183,12 +199,11 @@
       font-size: 16px;
     }
 
-    /* 🌟 พื้นที่สีขาวด้านล่าง */
     .white-section {
       flex: 1; 
       background: #ffffff;
       border-radius: 24px 24px 0 0;
-      margin-top: 20px;
+      margin-top: 8px; 
       padding-top: 24px;
       position: relative;
       z-index: 20;
@@ -196,10 +211,9 @@
     }
 
     .section-title { display: flex; justify-content: space-between; align-items: center; margin: 0 20px 16px 20px; }
-    .section-title h2 { font-size: 17px; color: #333; font-weight: 700; } /* ปรับให้ใหญ่และหนาขึ้น */
+    .section-title h2 { font-size: 17px; color: #333; font-weight: 700; }
     .section-title a { font-size: 13px; color: #888; text-decoration: none; font-weight: 500;}
 
-    /* 🌟 เมนูบริการ */
     .menu-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 0 20px; }
     .menu-item { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; cursor: pointer; }
     
@@ -212,18 +226,16 @@
 
     .menu-icon svg {
       width: 30px; height: 30px;
-      stroke: #1a1c8f; stroke-width: 1.8; fill: none;
+      stroke: #303790; stroke-width: 1.8; fill: none;
       stroke-linecap: round; stroke-linejoin: round;
     }
     
-    /* 🌟 ปรับขนาดตัวอักษรเมนู */
     .menu-item span { font-size: 13px; color: #4b5563; line-height: 1.3; font-weight: 500;}
 
-    /* สไลเดอร์ */
     .carousel-wrapper {
       overflow-x: auto;
       scrollbar-width: none; 
-      margin-top: 24px;
+      margin-top: 20px; 
       padding: 0; 
       position: relative;
     }
@@ -238,7 +250,7 @@
 
     .banner {
       flex: 0 0 auto; border-radius: 12px; overflow: hidden;
-      position: relative; height: 90px; background: #e5e7eb; cursor: pointer;
+      position: relative; height: 70px; background: #e5e7eb; cursor: pointer;
     }
 
     .banner-bg-img {
@@ -252,10 +264,10 @@
       color: #9ca3af; font-size: 24px; z-index: 0;
     }
 
-    /* จุดบอกตำแหน่ง */
     .carousel-dots {
       display: flex; justify-content: center; align-items: center; gap: 8px;
-      margin-top: 12px; margin-bottom: 24px; 
+      margin-top: 10px; 
+      margin-bottom: 20px; 
     }
 
     .dot-indicator {
@@ -264,10 +276,9 @@
     }
 
     .dot-indicator.active {
-      width: 24px; border-radius: 4px; background-color: #1a1c8f;
+      width: 24px; border-radius: 4px; background-color: #303790;
     }
 
-    /* 🌟 ประกาศทั้งหมด */
     .announcement-vertical-list {
       display: flex; flex-direction: column; gap: 12px;
       padding: 0 20px; margin-bottom: 20px;
@@ -290,7 +301,6 @@
       color: #9ca3af; font-size: 24px; z-index: 0;
     }
 
-    /* 🌟 แถบเมนูล่าง */
     .bottom-nav {
       position: absolute; 
       left: 0; right: 0; bottom: 0;
@@ -303,11 +313,11 @@
     }
 
     .nav-item { display: flex; flex-direction: column; align-items: center; gap: 6px; color: #9ca3af; font-size: 12px; background: none; border: none; cursor: pointer; font-family: inherit; font-weight: 500;}
-    .nav-item.active { color: #1a1c8f; font-weight: 700;}
+    .nav-item.active { color: #303790; font-weight: 700;}
     .nav-item i { font-size: 22px; }
     
     .nav-scan { margin-top: -35px; }
-    .scan-btn { width: 64px; height: 64px; background: #1a1c8f; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 24px; border: 5px solid #f8f9fa; box-shadow: 0 4px 12px rgba(26, 28, 143, 0.3); }
+    .scan-btn { width: 64px; height: 64px; background: #303790; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 24px; border: 5px solid #f8f9fa; box-shadow: 0 4px 12px rgba(48, 55, 144, 0.3); }
 
     .scan-icon {
       width: 32px; height: 32px;
@@ -315,7 +325,6 @@
       stroke-linecap: round; stroke-linejoin: round;
     }
 
-    /* 🌟 ปุ่มแชท */
     .chat-fab {
       position: absolute;
       right: 16px;
@@ -332,11 +341,10 @@
     }
     .chat-fab svg {
       width: 28px; height: 28px;
-      stroke: #1a1c8f; stroke-width: 2; fill: none;
+      stroke: #303790; stroke-width: 2; fill: none;
       stroke-linecap: round; stroke-linejoin: round;
     }
 
-    /* --- PIN Modal --- */
     .pin-modal {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.5); z-index: 100; display: flex; flex-direction: column; justify-content: flex-end;
@@ -355,20 +363,19 @@
     .dot { width: 12px; height: 12px; border-radius: 50%; background: #e5e7eb; border: 1px solid #d1d5db; transition: background 0.2s; }
     .dot.filled { background: #6b7280; border-color: #6b7280; }
     .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; width: 100%; max-width: 300px; }
-    .key { width: 70px; height: 70px; border-radius: 50%; background: #eef1f5; color: #1a1c8f; font-size: 26px; font-weight: 500; display: flex; justify-content: center; align-items: center; cursor: pointer; user-select: none; margin: 0 auto; border: none; font-family: inherit; }
+    .key { width: 70px; height: 70px; border-radius: 50%; background: #eef1f5; color: #303790; font-size: 26px; font-weight: 500; display: flex; justify-content: center; align-items: center; cursor: pointer; user-select: none; margin: 0 auto; border: none; font-family: inherit; }
     .key:active { background: #d1d5db; }
-    .key.action { background: transparent; font-size: 20px; color: #1a1c8f; }
+    .key.action { background: transparent; font-size: 20px; color: #303790; }
     .forgot-btn { margin-top: 20px; font-size: 14px; color: #555; background: #e5e7eb; padding: 8px 20px; border-radius: 20px; border: none; cursor: pointer; font-family: inherit;}
 
-    /* 🌟 Modal ขยายรูปบัตร */
     .expand-modal {
       position: fixed;
       inset: 0;
       width: auto;
       height: auto;
-      background: rgba(0, 0, 0, 0.25);
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
       z-index: 200;
       display: none;
       flex-direction: column;
@@ -384,13 +391,21 @@
     
     .back-btn,
     .header-icons-expanded .icon-btn {
-      background: rgba(190, 185, 225, 0.55);
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       border: none;
       color: #ffffff;
       width: 46px; height: 46px; border-radius: 50%;
       display: flex; justify-content: center; align-items: center;
       font-size: 20px; cursor: pointer;
       box-shadow: none;
+      transition: background 0.2s;
+    }
+    
+    .back-btn:active,
+    .header-icons-expanded .icon-btn:active {
+      background: rgba(255, 255, 255, 0.35);
     }
 
     .header-icons-expanded { display: flex; gap: 12px; }
@@ -406,7 +421,9 @@
       flex-shrink: 0; 
       width: min(calc(96cqh), calc((96cqw) * 1.58));
       aspect-ratio: 1.58 / 1;
-      position: relative; transition: transform 0.6s; transform-style: preserve-3d;
+      position: relative; 
+      transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
       cursor: pointer; perspective: 1000px;
     }
 
@@ -416,13 +433,16 @@
       position: absolute; width: 100%; height: 100%;
       backface-visibility: hidden; border-radius: 12px; 
       box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
-      overflow: hidden; background: white;
+      overflow: hidden; 
+      background: transparent; 
     }
 
     .expand-card-back { transform: rotateY(180deg); }
 
     .expand-card-image {
-      width: 100%; height: 100%; object-fit: cover; display: block;
+      width: 100%; height: 100%; 
+      object-fit: cover; 
+      display: block;
     }
 
     .reset-btn {
@@ -444,7 +464,6 @@
 </head>
 <body>
 
-  <!-- Inputs สำหรับอัปโหลดรูป -->
   <input type="file" id="uploadBanner1" accept="image/*" onchange="handleImageUpload(event, 'banner1')">
   <input type="file" id="uploadBanner2" accept="image/*" onchange="handleImageUpload(event, 'banner2')">
   
@@ -562,7 +581,7 @@
           <div class="menu-item" onclick="alert('ระบบแจ้งย้ายที่อยู่')">
             <div class="menu-icon">
               <svg viewBox="0 0 24 24" class="solid-box-icon">
-                <path d="M12 2.5 L3.5 7 V17 L12 21.5 L20.5 17 V7 Z" fill="#1a1c8f" stroke="#1a1c8f" stroke-width="1.5" stroke-linejoin="round"></path>
+                <path d="M12 2.5 L3.5 7 V17 L12 21.5 L20.5 17 V7 Z" fill="#303790" stroke="#303790" stroke-width="1.5" stroke-linejoin="round"></path>
                 <polyline points="3.5 7 12 11.5 20.5 7" stroke="#ffffff" stroke-width="1.4" fill="none"></polyline>
                 <line x1="12" y1="11.5" x2="12" y2="21.5" stroke="#ffffff" stroke-width="1.4"></line>
                 <line x1="8" y1="4.8" x2="16" y2="9.3" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round"></line>
@@ -633,14 +652,13 @@
       </div>
     </div>
 
-    <!-- 🌟 Bottom Nav -->
     <div class="bottom-nav">
       <div class="chat-fab" onclick="alert('เปิดแชทสอบถามเจ้าหน้าที่')">
         <svg viewBox="0 0 24 24">
           <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-          <circle cx="8" cy="11" r="1.5" fill="#1a1c8f" stroke="none"></circle>
-          <circle cx="12" cy="11" r="1.5" fill="#1a1c8f" stroke="none"></circle>
-          <circle cx="16" cy="11" r="1.5" fill="#1a1c8f" stroke="none"></circle>
+          <circle cx="8" cy="11" r="1.5" fill="#303790" stroke="none"></circle>
+          <circle cx="12" cy="11" r="1.5" fill="#303790" stroke="none"></circle>
+          <circle cx="16" cy="11" r="1.5" fill="#303790" stroke="none"></circle>
         </svg>
       </div>
 
@@ -666,7 +684,7 @@
       <button class="nav-item"><i class="fa-solid fa-sliders"></i><span>ตั้งค่า</span></button>
     </div>
 
-  </div> <!-- ปิด app-container -->
+  </div>
 
   <div class="pin-modal" id="pinModal">
     <div class="pin-container">
@@ -714,20 +732,16 @@
   </div>
 
   <script>
-    // ==========================================
-    // 🌟 โค้ดสไลเดอร์แบบ Infinite Loop
-    // ==========================================
     let autoSlideInterval;
     let userTouching = false;
     let isJumping = false;
-    let currentIndex = 0;        // ดัชนีของแบนเนอร์จริง (0 หรือ 1)
-    const REAL = 2;              // จำนวนแบนเนอร์จริง
+    let currentIndex = 0;
+    const REAL = 2;
 
     const carouselWrapper = document.getElementById('bannerCarousel');
     const carouselTrack = document.getElementById('carouselTrack');
     const dots = [document.getElementById('dot1'), document.getElementById('dot2')];
 
-    // ลำดับในแทร็ก: [0]=โคลนของใบ2, [1]=ใบ1, [2]=ใบ2, [3]=โคลนของใบ1
     function slideEls() {
       return Array.from(carouselTrack.querySelectorAll('.banner'));
     }
@@ -756,7 +770,7 @@
       return el.offsetLeft + el.offsetWidth / 2 - carouselWrapper.clientWidth / 2;
     }
 
-    function jumpTo(elIndex) {            // วาร์ปแบบไม่มีอนิเมชัน
+    function jumpTo(elIndex) {
       isJumping = true;
       carouselWrapper.style.scrollBehavior = 'auto';
       carouselWrapper.style.scrollSnapType = 'none';
@@ -783,11 +797,10 @@
       return best;
     }
 
-    // ถ้าหยุดอยู่ที่ตัวโคลน ให้วาร์ปกลับตัวจริง
     function fixIfOnClone() {
       const i = nearestElIndex();
-      if (i === 0) jumpTo(REAL);            // โคลนก่อนหน้า -> ใบสุดท้ายจริง
-      else if (i === REAL + 1) jumpTo(1);   // โคลนถัดไป -> ใบแรกจริง
+      if (i === 0) jumpTo(REAL);
+      else if (i === REAL + 1) jumpTo(1);
     }
 
     function updateDots(index) {
@@ -798,7 +811,7 @@
       clearInterval(autoSlideInterval);
       autoSlideInterval = setInterval(() => {
         if (userTouching || isJumping) return;
-        smoothTo(nearestElIndex() + 1);     // เลื่อนไปทางขวาเสมอ ไม่ย้อน
+        smoothTo(nearestElIndex() + 1);
       }, 3500);
     }
     function stopAutoSlide() { clearInterval(autoSlideInterval); }
@@ -813,13 +826,11 @@
       scrollTimer = setTimeout(() => {
         fixIfOnClone();
         const i = nearestElIndex();
-        // map ตำแหน่งในแทร็ก -> ดัชนีจริง (0..REAL-1)
         currentIndex = (i - 1 + REAL) % REAL;
         updateDots(currentIndex);
       }, 80);
     }, { passive: true });
 
-    // 🌟 ฟังก์ชันสำหรับอัปเดตความกว้างของแบนเนอร์
     function updateBannerWidths() {
       const wrapperWidth = carouselWrapper.clientWidth; 
       const targetWidth = wrapperWidth * 0.80; 
@@ -830,7 +841,6 @@
       });
     }
 
-    // 🌟 ฟังก์ชัน Sync รูปภาพไปยังโคลน
     function syncClones() {
       const pairs = [
         ['bannerImg2', 'bannerBg2', 'bannerImgCloneBefore', 'bannerBgCloneBefore'],
@@ -846,9 +856,6 @@
       });
     }
 
-    // ==========================================
-    // 🌟 โค้ดระบบอื่นๆ (PIN, บัตร, อัปโหลด)
-    // ==========================================
     let pinCode = "";
     const correctPin = "12345678"; 
     let isFlipped = false;
@@ -859,7 +866,7 @@
     window.onload = function() {
       updateBannerWidths();
       setupLoop();
-      updateBannerWidths();          // ตั้งความกว้างให้ตัวโคลนด้วย
+      updateBannerWidths();
       loadImagesFromStorage();
       setTimeout(() => { jumpTo(1); startAutoSlide(); }, 200);
 
@@ -924,7 +931,7 @@
         document.getElementById('bannerBg2').style.display = 'none'; 
       }
       
-      syncClones(); // อัปเดตรูปโคลนหลังโหลดเสร็จ
+      syncClones();
 
       if (savedAnn1) { document.getElementById('annImg1').src = savedAnn1; document.getElementById('annImg1').style.display = 'block'; document.getElementById('annBg1').style.display = 'none'; }
       if (savedAnn2) { document.getElementById('annImg2').src = savedAnn2; document.getElementById('annImg2').style.display = 'block'; document.getElementById('annBg2').style.display = 'none'; }
@@ -980,7 +987,7 @@
       updateDots();
     }
 
-    function updateDots() { // (ฟังก์ชันนี้ใช้กับ PIN dots)
+    function updateDots() {
       const pinDots = document.querySelectorAll('.dot');
       pinDots.forEach((dot, index) => {
         if (index < pinCode.length) dot.classList.add('filled');
@@ -1088,7 +1095,6 @@
             localStorage.setItem('thaid_ann5', imageUrl);
           }
 
-          // อัปเดตโคลนทุกครั้งที่รูปเปลี่ยน
           syncClones();
         };
         reader.readAsDataURL(file); 
