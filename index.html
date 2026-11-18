@@ -152,7 +152,7 @@
     .main-scroll-area::-webkit-scrollbar { display: none; }
 
     .blue-section {
-      padding: 0 clamp(12px, 3vw, 20px) 10px;
+      padding: 0 clamp(18px, 4vw, 24px) 10px;
       position: relative;
       z-index: 10;
       display: flex;
@@ -403,9 +403,12 @@
     .header-icons-expanded { display: flex; gap: 12px; }
 
     .expand-card-container {
-      /* จัดบัตรให้อยู่กึ่งกลางจอ และเผื่อพื้นที่จากแถวปุ่มด้านบนตาม safe area */
+      /* เลื่อนพื้นที่จัดบัตรลง 20px ให้เห็นการขยับชัด และยังคำนวณขนาดจากจอเดิม */
       position: absolute;
-      inset: 0;
+      top: 20px;
+      right: 0;
+      bottom: -20px;
+      left: 0;
       display: flex; justify-content: center; align-items: center;
       container-type: size;
     }
@@ -420,7 +423,6 @@
       );
       aspect-ratio: 1.58 / 1;
       position: relative;
-      top: 8px;
       transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
       transform: rotate(90deg);
       transform-style: preserve-3d;
