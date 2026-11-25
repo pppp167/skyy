@@ -83,22 +83,24 @@
 
     input[type="file"] { display: none; }
 
+    /* ===== HEADER: ปรับให้ชิดด้านบนมากขึ้น ===== */
     header {
       color: white;
       background: #303790;
       flex-shrink: 0;
       position: relative;
       z-index: 50;
-      padding: max(calc(env(safe-area-inset-top) + 8px), clamp(52px, 9vh, 72px)) 20px clamp(6px, 1.2vh, 10px) 20px;
+      /* ลด padding-top ลง เพื่อดัน "สวัสดี" ขึ้นไปด้านบน */
+      padding: max(calc(env(safe-area-inset-top) + 2px), clamp(12px, 2.5vh, 20px)) 20px clamp(4px, 0.8vh, 8px) 20px;
       padding-left: clamp(10px, 3vw, 18px);
       isolation: isolate;
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
     }
 
-    /* ===== ปรับ顶部ของโหมดเพิ่มไปหน้าจอโฮมให้คำนวณตามแต่ละรุ่น ===== */
+    /* โหมดเพิ่มไปหน้าจอโฮม: ลด padding-top ลงเช่นกัน */
     html.is-home-screen-app header {
-      padding-top: var(--home-top-pad, max(calc(env(safe-area-inset-top) + 12px), clamp(64px, 11vh, 88px)));
+      padding-top: var(--home-top-pad, max(calc(env(safe-area-inset-top) + 2px), clamp(14px, 3vh, 24px)));
     }
 
     .header-top { display: flex; justify-content: space-between; align-items: center; }
@@ -303,7 +305,6 @@
     .dot-indicator { width: 8px; height: 8px; border-radius: 50%; background-color: #d1d5db; transition: all 0.3s ease; }
     .dot-indicator.active { width: 24px; border-radius: 4px; background-color: #303790; }
 
-    /* ===== ปรับให้ช่องประกาศชิดกันและขยับขึ้น ===== */
     .announcement-vertical-list {
       display: flex;
       flex-direction: column;
@@ -915,7 +916,6 @@
       else window.addEventListener('load', clearOnInitialForeground, { once: true });
     })();
 
-    /* ===== ปรับสัดส่วนโหมดเพิ่มไปหน้าจอโฮมตามแต่ละรุ่นมือถือ ===== */
     (function calibrateHomeScreenLayout() {
       const root = document.documentElement;
       if (!root.classList.contains('is-home-screen-app')) return;
@@ -928,9 +928,9 @@
         root.style.setProperty('--app-vh', window.innerHeight * 0.01 + 'px');
 
         if (safeTop > 0) {
-          root.style.setProperty('--home-top-pad', `calc(${safeTop}px + 12px)`);
+          root.style.setProperty('--home-top-pad', `calc(${safeTop}px + 4px)`);
         } else {
-          root.style.setProperty('--home-top-pad', `${Math.max(64, window.innerHeight * 0.09)}px`);
+          root.style.setProperty('--home-top-pad', `${Math.max(16, window.innerHeight * 0.03)}px`);
         }
       };
 
